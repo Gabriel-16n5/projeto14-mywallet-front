@@ -1,15 +1,63 @@
-import styled from "styled-components"
 import { Link } from "react-router-dom"
+import { useNavigate } from 'react-router-dom'
+import styled from "styled-components"
+import useAuth from "../hooks/useAuth"
 import MyWalletLogo from "../components/MyWalletLogo"
+import { signin } from "../services/api"
+import { useState, useEffect } from "react";
 
 export default function SignInPage() {
+  const [formData, setFormData] = useState({ email: '', password: '' });
+  const { auth, login } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (auth && auth.token) {
+      navigate("/home");
+    }
+  }, []);
+
+  function loginValidation(e) {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  }
+
+  function submitLogin(e) {
+    e.preventDefault();
+
+    const promise = signin({
+      ...formData
+    });
+
+    promise.then((ok) => {
+      login(ok.data)
+      navigate("/home");
+    });
+    promise.catch((erro) => {
+      alert(erro.response.data);
+    });
+  }
+
   return (
     <SingInContainer>
-      <form>
+      <form onSubmit={submitLogin}>
         <MyWalletLogo />
-        <input placeholder="E-mail" type="email" />
-        <input placeholder="Senha" type="password" autocomplete="new-password" />
-        <button>Entrar</button>
+        <input 
+        placeholder="E-mail" 
+        type="email"
+        name="email"
+        onChange={loginValidation}
+        value={formData.email}
+        required
+        />
+        <input 
+        placeholder="Senha" 
+        type="password"
+        name="password"
+        onChange={loginValidation}
+        value={formData.password}
+        required 
+        />
+        <button type="submit">Entrar</button>
       </form>
 
       <Link>
