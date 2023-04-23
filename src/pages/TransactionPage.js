@@ -3,11 +3,11 @@ import styled from "styled-components"
 export default function TransactionsPage() {
   return (
     <TransactionsContainer>
-      <h1>Nova TRANSAÇÃO</h1>
+      <h1>Nova transação</h1>
       <form>
         <input placeholder="Valor" type="text"/>
         <input placeholder="Descrição" type="text" />
-        <button>Salvar TRANSAÇÃO</button>
+        <button>Salvar transação</button>
       </form>
     </TransactionsContainer>
   )

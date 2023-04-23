@@ -1,37 +1,64 @@
 import styled from "styled-components"
 import { BiExit } from "react-icons/bi"
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai"
+import { useState, useEffect } from "react";
+import useAuth from "../hooks/useAuth";
+import {getTransactions} from "../services/api"
 
 export default function HomePage() {
+  const { auth } = useAuth();
+  const [historic, setHistoric] = useState();
+  const [balance, setBalance] = useState(0);
+  function honeyMovimentation() {
+    const promise = getTransactions(auth);
+
+    promise.then((ok) => {
+      const holderData = ok.data;
+      setHistoric(holderData)
+      let j = 0
+      for(let i = 0 ; i< holderData.length; i++){ 
+        j = j + holderData[i].valor
+        setBalance(j)
+      }
+    });
+    promise.catch((erro) => {
+      alert(erro.response.data);
+    });
+  }
+  useEffect(honeyMovimentation, []);
+
+  if(historic === undefined){
+    return <h1>Carregando...</h1>;
+  }
   return (
+
     <HomeContainer>
       <Header>
-        <h1>Olá, Fulano</h1>
+        <h1>Olá, {historic[1].name}</h1>
         <BiExit />
       </Header>
 
       <TransactionsContainer>
         <ul>
-          <ListItemContainer>
-            <div>
-              <span>30/11</span>
-              <strong>Almoço mãe</strong>
-            </div>
-            <Value color={"negativo"}>120,00</Value>
-          </ListItemContainer>
+          <li>
+            {historic.map((lst, i) =>
+            <ListItemContainer key={i}>
+            
+              <div >
+                <span>{lst.data}</span>
+                <strong>{lst.description}</strong>
+              </div>
+              
+              <Value color={lst.valor <= 0 ? "negativo" : "positivo"}>{lst.valor}</Value>
+            </ListItemContainer>
+            )}
+          </li>
 
-          <ListItemContainer>
-            <div>
-              <span>15/11</span>
-              <strong>Salário</strong>
-            </div>
-            <Value color={"positivo"}>3000,00</Value>
-          </ListItemContainer>
         </ul>
 
         <article>
           <strong>Saldo</strong>
-          <Value color={"positivo"}>2880,00</Value>
+          <Value color={balance <= 0 ? "negativo" : "positivo"}>{balance}</Value>
         </article>
       </TransactionsContainer>
 
@@ -66,7 +93,7 @@ const Header = styled.header`
   color: white;
 `
 const TransactionsContainer = styled.article`
-  flex-grow: 1;
+  height: 500px;
   background-color: #fff;
   color: #000;
   border-radius: 5px;
@@ -74,9 +101,12 @@ const TransactionsContainer = styled.article`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  ul {
+    overflow-y: scroll;
+  }
   article {
     display: flex;
-    justify-content: space-between;   
+    justify-content: space-between;  
     strong {
       font-weight: 700;
       text-transform: uppercase;
