@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 export default function HomePage() {
-  const { auth } = useAuth();
+  const { auth, user } = useAuth();
   const [historic, setHistoric] = useState();
   const [balance, setBalance] = useState(0);
   const navigate = useNavigate();
@@ -43,7 +43,7 @@ export default function HomePage() {
 
     <HomeContainer>
       <Header>
-        <h1>Olá, {historic[1].name}</h1>
+        <h1>Olá, {user}</h1>
        <Link to="/"><BiExit size={35} onClick={cleanStorage} /></Link>
       </Header>
 
@@ -57,14 +57,14 @@ export default function HomePage() {
                 <strong>{lst.description}</strong>
               </div>
               
-              <Value color={lst.valor <= 0 ? "negativo" : "positivo"}>{lst.valor}</Value>
+              <Value color={lst.valor < 0 ? "negativo" : "positivo"}>{lst.valor}</Value>
             </ListItemContainer>
             )}
         </ul>
 
         <article>
           <strong>Saldo</strong>
-          <Value color={balance <= 0 ? "negativo" : "positivo"}>{balance}</Value>
+          <Value color={balance < 0 ? "negativo" : "positivo"}>{balance}</Value>
         </article>
       </TransactionsContainer>
 

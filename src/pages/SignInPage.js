@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 
 export default function SignInPage() {
   const [formData, setFormData] = useState({ email: '', password: '' });
-  const { auth, login } = useAuth();
+  const { auth, login, userData, user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,7 +29,8 @@ export default function SignInPage() {
     });
 
     promise.then((ok) => {
-      login(ok.data)
+      login(ok.data.token)
+      userData(ok.data.name)
       navigate("/home");
     });
     promise.catch((erro) => {
@@ -60,7 +61,7 @@ export default function SignInPage() {
         <button type="submit">Entrar</button>
       </form>
 
-      <Link>
+      <Link to="/cadastro">
         Primeira vez? Cadastre-se!
       </Link>
     </SingInContainer>
