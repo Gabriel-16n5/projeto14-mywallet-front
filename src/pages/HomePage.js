@@ -4,11 +4,19 @@ import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai"
 import { useState, useEffect } from "react";
 import useAuth from "../hooks/useAuth";
 import {getTransactions} from "../services/api"
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function HomePage() {
   const { auth } = useAuth();
   const [historic, setHistoric] = useState();
   const [balance, setBalance] = useState(0);
+  const navigate = useNavigate();
+
+  function cleanStorage() {
+    localStorage.removeItem("auth");
+  }
+
   function honeyMovimentation() {
     const promise = getTransactions(auth);
 
@@ -23,6 +31,7 @@ export default function HomePage() {
     });
     promise.catch((erro) => {
       alert(erro.response.data);
+      navigate("/");
     });
   }
   useEffect(honeyMovimentation, []);
@@ -35,12 +44,11 @@ export default function HomePage() {
     <HomeContainer>
       <Header>
         <h1>Olá, {historic[1].name}</h1>
-        <BiExit />
+       <Link to="/"><BiExit size={35} onClick={cleanStorage} /></Link>
       </Header>
 
       <TransactionsContainer>
         <ul>
-          <li>
             {historic.map((lst, i) =>
             <ListItemContainer key={i}>
             
@@ -52,8 +60,6 @@ export default function HomePage() {
               <Value color={lst.valor <= 0 ? "negativo" : "positivo"}>{lst.valor}</Value>
             </ListItemContainer>
             )}
-          </li>
-
         </ul>
 
         <article>
