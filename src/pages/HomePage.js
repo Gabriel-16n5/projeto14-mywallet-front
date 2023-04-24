@@ -70,14 +70,14 @@ export default function HomePage() {
 
 
       <ButtonsContainer>
-        <button>
+        <Link to="/nova-transacao/entrada" ><button style={{ width: 155 }}>
           <AiOutlinePlusCircle />
           <p>Nova <br /> entrada</p>
-        </button>
-        <button>
+        </button></Link>
+        <Link to="/nova-transacao/saida" ><button style={{ width: 155 }}>
           <AiOutlineMinusCircle />
           <p>Nova <br />saída</p>
-        </button>
+        </button></Link>
       </ButtonsContainer>
 
     </HomeContainer>
