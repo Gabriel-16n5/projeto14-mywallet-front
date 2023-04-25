@@ -64,7 +64,7 @@ export default function HomePage() {
 
         <article>
           <strong>Saldo</strong>
-          <Value color={balance < 0 ? "negativo" : "positivo"}>{balance}</Value>
+          <Value color={balance < 0 ? "negativo" : "positivo"}>{parseFloat(balance).toFixed(2)}</Value>
         </article>
       </TransactionsContainer>
 
