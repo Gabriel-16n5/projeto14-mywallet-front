@@ -1,6 +1,6 @@
-# mywallet-api - Back-end
-Deploy link: https://mywallet-api-lz48.onrender.com
-Back-end of a digital wallet application
+# mywallet-api - Front-end
+Deploy link: https://projeto14-mywallet-front-nine-self.vercel.app/
+Front-end of a digital wallet application
 
 ## About the project
 
@@ -17,12 +17,12 @@ The project aims to develop a digital wallet, a secure solution for managing per
 # Technologies used
 For this project, the following technologies were used:
 
-- NodeJs;
-- Express;
-- MongoDb;
-- uuid;
-- cors;
-- Joi;
+- Axios;
+- DayJs;
+- DotEnv;
+- React;
+- React Icons;
+- Styled Components;
 
 # How to run in development
 
@@ -34,11 +34,10 @@ For this project, the following technologies were used:
 npm i
 ```
 
-3. Create a PostgreSQL database or leave it to be created automatically when configuring the .env.
-4. Configure the .env using the .env.example as a base.
+3. Configure the .env using the .env.example as a base.
 
-5. To run the project locally:
+4. To run the project locally:
 
 ```bash
-npm run dev
+npm run start
 ```
