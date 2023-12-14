@@ -6,12 +6,12 @@ export function createData(token) {
     return { headers: { Authorization: `Bearer ${token}` } };
 }
 
-export function signin(body) { // login
+export function signin(body) {
     const promise = axios.post(`${URL}/`, body);
     return promise;
 }
 
-export function signup(body) { // cadastro
+export function signup(body) {
     const promise = axios.post(`${URL}/cadastro`, body);
     return promise;
 }
@@ -22,8 +22,8 @@ export function getTransactions(token) {
     return promise;
 }
 
-export function postTransactions(tipo, body, token) {
+export function postTransactions(chooseOperation, body, token) {
     const data = createData(token);
-    const promise = axios.post(`${URL}/nova-transacao/${tipo}`, body, data);
+    const promise = axios.post(`${URL}/nova-transacao/${chooseOperation}`, body, data);
     return promise;
 }

@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 
 export default function SignInPage() {
   const [formData, setFormData] = useState({ email: '', password: '' });
-  const { auth, login, userData, user } = useAuth();
+  const { auth, login, userData } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,8 +33,8 @@ export default function SignInPage() {
       userData(ok.data.name)
       navigate("/home");
     });
-    promise.catch((erro) => {
-      alert(erro.response.data);
+    promise.catch((error) => {
+      alert(error.response.data);
     });
   }
 

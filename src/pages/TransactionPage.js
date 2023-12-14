@@ -1,29 +1,25 @@
 import styled from "styled-components"
 import { useState, useEffect } from "react";
 import useAuth from "../hooks/useAuth";
-// import {postTransactions} from "../services/api"
-import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import {getTransactions, postTransactions} from "../services/api";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-const URL = process.env.REACT_APP_API_URL;
 
 export default function TransactionsPage() {
   const navigate = useNavigate();
-  const { tipo } = useParams();
-  const { auth, user } = useAuth();
+  const { chooseOperation } = useParams();
+  const { auth } = useAuth();
   const [formData, setFormData] = useState({ valor: '', description: ''});
 
 
   useEffect(() => {
-    if(tipo != "entrada" && tipo != "saida"){
+    if(chooseOperation != "entrada" && chooseOperation != "saida"){
       alert("Página não encontrada");
       navigate("/home");
     }
     const promise = getTransactions(auth);
-    promise.catch((erro) => {
-      alert(erro.response.data);
+    promise.catch((error) => {
+      alert(error.response.data);
       navigate("/home");
     });
   })
@@ -36,13 +32,13 @@ export default function TransactionsPage() {
   function launchValor(e){
     e.preventDefault();
 
-    const promise = postTransactions(tipo, formData, auth)
-    promise.then((ok) => {
+    const promise = postTransactions(chooseOperation, formData, auth)
+    promise.then(() => {
       alert("Movimentação adicionada com sucesso")
       navigate("/home");
     });
-    promise.catch((erro) => {
-      alert(erro.response.data);
+    promise.catch((error) => {
+      alert(error.response.data);
       navigate("/home");
     });
 
@@ -51,7 +47,7 @@ export default function TransactionsPage() {
 
   return (
     <TransactionsContainer>
-      <h1>Nova {tipo}</h1>
+      <h1>Nova {chooseOperation}</h1>
       <form onSubmit={launchValor}>
         <input 
         placeholder="Valor"
@@ -71,7 +67,7 @@ export default function TransactionsPage() {
         onChange={dataValidation}
         required
          />
-        <button type="submit">Salvar {tipo}</button>
+        <button type="submit">Salvar {chooseOperation}</button>
       </form>
     </TransactionsContainer>
   )

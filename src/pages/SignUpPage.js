@@ -13,7 +13,7 @@ export default function SignUpPage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
-  function cadastrar(e) {
+  function register(e) {
     e.preventDefault();
 
    if(formData.password !== formData.confirmPassword){
@@ -29,14 +29,14 @@ export default function SignUpPage() {
     promise.then(() => {
       navigate("/");
     });
-    promise.catch((erro) => {
-      alert(erro.response.data);
+    promise.catch((error) => {
+      alert(error.response.data);
     });
   }
 
   return (
     <SingUpContainer>
-      <form onSubmit={cadastrar}>
+      <form onSubmit={register}>
         <MyWalletLogo />
         <input 
           placeholder="Nome" 

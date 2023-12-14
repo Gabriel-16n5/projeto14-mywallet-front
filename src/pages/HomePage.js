@@ -17,7 +17,7 @@ export default function HomePage() {
     localStorage.removeItem("auth");
   }
 
-  function honeyMovimentation() {
+  function moneyMovimentation() {
     const promise = getTransactions(auth);
 
     promise.then((ok) => {
@@ -29,12 +29,12 @@ export default function HomePage() {
         setBalance(j)
       }
     });
-    promise.catch((erro) => {
-      alert(erro.response.data);
+    promise.catch((error) => {
+      alert(error.response.data);
       navigate("/");
     });
   }
-  useEffect(honeyMovimentation, []);
+  useEffect(moneyMovimentation, []);
 
   if(historic === undefined){
     return <h1>Carregando...</h1>;
