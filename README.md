@@ -1,5 +1,8 @@
 # mywallet-api - Front-end
 Deploy link: https://projeto14-mywallet-front-nine-self.vercel.app/
+Docker link: https://hub.docker.com/r/gabrielgranjeia/mywallet/tags
+latest: digest: sha256:60c52efb22328e0318f97072515a7cbed8a0679d17e048c9d57274c32a7ddbb2 size: 2199
+
 Front-end of a digital wallet application
 
 ## About the project
